@@ -3,6 +3,7 @@ const router = require("./routes");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(cors());
 app.use("/api", router);
+app.use(cookieParser());
 
 const start = async () => {
   await mongoose

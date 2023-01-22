@@ -1,20 +1,36 @@
+const UserModel = require("../models/UserModel");
+const bcrypt = require("bcrypt");
+
 class UserService {
-  registration() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
+  async registration(email, password) {
+    const candidate = await UserModel.findOne({ email });
+    if (candidate) {
+      throw new Error(`Пользователь с почтовым адресом ${email} существует.`);
     }
+
+    const passwordHash = bcrypt.hashSync(password, 3);
+    const user = new UserModel({
+      email,
+      password: passwordHash,
+    });
+
+    await user.save();
+
+    return {
+      user,
+    };
   }
-  login() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
+  async login(email, password) {
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      throw new Error(`Пользователь с ${email} не существует.`);
+    }
+
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+
+    if (!passwordIsValid) {
+      throw new Error("Логин или пароль введены неправильно.");
     }
   }
 }

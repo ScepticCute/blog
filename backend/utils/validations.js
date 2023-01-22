@@ -1,6 +1,6 @@
 const { check, validationResult } = require("express-validator");
 
-exports.validateRegistration = [
+exports.validateRegistrationAndLogin = [
   // Email Validation
   check("email").isEmail().withMessage("Please enter a valid email address."),
 

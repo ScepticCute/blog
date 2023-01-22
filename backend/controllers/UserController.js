@@ -1,31 +1,19 @@
-const UserModel = require("../models/UserModel");
-const bcrypt = require("bcrypt");
+const UserService = require("../services/UserService");
 
 class UserController {
   async registration(req, res) {
     try {
       const { email, password } = req.body;
-      const candidate = await UserModel.findOne({ email });
-      if (candidate) {
-        return res.status(400).json({
-          message: "Данная электронная почта уже зарегистрирована в системе.",
-        });
-      }
 
-      const passwordHash = bcrypt.hashSync(password, 3);
-      const user = new UserModel({
-        username,
-        password: passwordHash,
-      });
+      const user = await UserService.registration(email, password);
 
-      await user.save();
-
-      return res.status(200).json({
+      return res.json({
         message: "Пользователь успешно зарегистрирован.",
+        user,
       });
     } catch (e) {
       console.error(e);
-      res.status(500).json({
+      res.status(400).json({
         message: "Не удалось создать пользователя.",
       });
     }
@@ -34,29 +22,16 @@ class UserController {
   async login(req, res) {
     try {
       const { email, password } = req.body;
-      const user = UserModel.findOne({ email });
-
-      if (!candidate) {
-        res.status(400).json({
-          message: "Логин или пароль введены неправильно.",
-        });
-      }
-
-      const passwordIsValid = bcrypt.compareSync(password, user.password);
-
-      if (!passwordIsValid) {
-        return res
-          .status(400)
-          .json({ message: "Логин или пароль введены неправильно." });
-      }
+      const user = await UserService.login(email, password);
 
       res.json({
         message: "Успешная авторизация.",
+        user,
       });
     } catch (e) {
       console.error(e);
-      res.status(500).json({
-        message: "Не удалось создать пользователя.",
+      res.status(400).json({
+        message: "Неудачная авторизация.",
       });
     }
   }
