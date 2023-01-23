@@ -1,4 +1,6 @@
-const PostSchema = new mongoose.Schema({
+const { Schema, model } = require("mongoose");
+
+const PostSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -8,9 +10,11 @@ const PostSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
+    type: String,
   },
+  // tags: {
+  //   type: Array,
+  // }
 });
 
-module.exports = mongoose.model("post", PostSchema);
+module.exports = Post = model("post", PostSchema);

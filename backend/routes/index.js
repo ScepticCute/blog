@@ -3,55 +3,45 @@ const { check } = require("express-validator");
 const PostController = require("../controllers/PostController");
 const UserController = require("../controllers/UserController");
 const {
-  //   validateRegistration,
-  //   validateRegistrationAndLogin,
+  validateRegistration,
+  validateRegistrationAndLogin,
   validateError,
-} = require("../utils/validations");
+  validateCreateOrUpdateOrPutPost,
+} = require('../utils/validations');
 const router = express.Router();
 
 //POSTS
-router.get("/posts", PostController.getPosts);
+router.get('/posts/:id', PostController.getPost);
 
-router.post("/posts", PostController.createPost);
+router.get('/posts', PostController.getAllPosts);
 
-router.delete("/posts", PostController.deletePost);
+router.post('/posts', validateCreateOrUpdateOrPutPost, validateError, PostController.createPost);
 
-router.patch("/posts", PostController.updatePost);
+router.delete('/posts/:id', PostController.deletePost);
 
-router.put("/posts", PostController.replacePost);
+router.patch(
+  '/posts/:id',
+  validateCreateOrUpdateOrPutPost,
+  validateError,
+  PostController.updatePost,
+);
+
+router.put(
+  '/posts/:id',
+  validateCreateOrUpdateOrPutPost,
+  validateError,
+  PostController.replacePost,
+);
 //POSTS
 
 //USERS
 router.post(
-  "/registration",
-
-  //   validateRegistrationAndLogin,
-
-  check("email").isEmail().withMessage("Please enter a valid email address."),
-
-  check("password")
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long.")
-    .matches(/\d/)
-    .withMessage("Password must contain a number."),
+  '/registration',
+  validateRegistrationAndLogin,
   validateError,
-  UserController.registration
+  UserController.registration,
 );
-router.post(
-  "/login",
-
-  //   validateRegistrationAndLogin,
-
-  check("email").isEmail().withMessage("Please enter a valid email address."),
-
-  check("password")
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long.")
-    .matches(/\d/)
-    .withMessage("Password must contain a number."),
-  validateError,
-  UserController.login
-);
+router.post('/login', validateRegistrationAndLogin, validateError, UserController.login);
 //USERS
 
 module.exports = router;

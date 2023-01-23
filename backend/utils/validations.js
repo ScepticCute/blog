@@ -1,18 +1,26 @@
 const { check, validationResult } = require("express-validator");
 
-exports.validateRegistrationAndLogin = [
-  // Email Validation
-  check("email").isEmail().withMessage("Please enter a valid email address."),
+/* ----> USER VALIDATION <---- */
+module.exports.validateRegistrationAndLogin = [
+  check('email').isEmail().withMessage('Введите корректный e-mail.'),
 
-  // Password Validation
-  check("password")
+  check('password')
     .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long.")
+    .withMessage('Пароль должен содержать как минимум 8 символов.')
     .matches(/\d/)
-    .withMessage("Password must contain a number."),
+    .withMessage('Пароль должен содержать как минимум одну цифру.'),
 ];
+/* ----> USER VALIDATION <---- */
 
-exports.validateError = (req, res, next) => {
+
+/* ----> POST VALIDATION <---- */
+module.exports.validateCreateOrUpdateOrPutPost = [
+  check('body').isLength({min: 12}).withMessage('Контент в посте должен содержать как минимум 12 символов.'),
+  check('title').isLength({min: 3}).withMessage('Название должно содержать как минимум 3 символа.')
+]
+/* ----> POST VALIDATION <---- */
+
+module.exports.validateError = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {

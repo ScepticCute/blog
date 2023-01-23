@@ -1,48 +1,47 @@
+const PostModel = require('../models/PostModel');
+const UserModel = require('../models/UserModel');
+
 class PostService {
-  method() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
-    }
+  async getAllPosts() {
+    const posts = await PostModel.find();
+    return posts;
   }
-  method() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
-    }
+  async getPost(id) {
+    const post = await PostModel.findById(id);
+    if (!post) throw new Error('Такого поста не существует.');
+    return post;
   }
-  method() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
-    }
+
+  async createPost(body, title) {
+    const post = await PostModel.create({ body, title });
+    await post.save;
+    return post;
   }
-  method() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
-    }
+  async deletePost(id) {
+    const deletedPost = await PostModel.findByIdAndDelete(id);
+    if (!deletedPost) throw new Error('Такого поста не существует.');
+    return true;
   }
-  method() {
-    try {
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Ошибка сервера.",
-      });
-    }
+  async updatePost(id, body, title) {
+    const post = await PostModel.findByIdAndUpdate(
+      id,
+      {
+        body,
+        title,
+      },
+      { new: true },
+    );
+    const post1 = await PostModel.findById(id);
+    if (!post) throw new Error('Такого поста не существует');
+    return post;
+  }
+  async replacePost(id, body, title) {
+    const post = PostModel.findOneAndReplace(id, {
+      body,
+      title,
+    });
+    if (!post) throw Error('Такого поста не существует.');
+    return post;
   }
 }
 

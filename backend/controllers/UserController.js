@@ -1,4 +1,5 @@
 const UserService = require("../services/UserService");
+const jwt = require("jsonwebtoken");
 
 class UserController {
   async registration(req, res) {
@@ -12,7 +13,7 @@ class UserController {
         user,
       });
     } catch (e) {
-      console.error(e);
+      console.info(e);
       res.status(400).json({
         message: "Не удалось создать пользователя.",
       });
@@ -29,7 +30,7 @@ class UserController {
         user,
       });
     } catch (e) {
-      console.error(e);
+      console.info(e);
       res.status(400).json({
         message: "Неудачная авторизация.",
       });
