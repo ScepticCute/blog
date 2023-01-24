@@ -2,9 +2,14 @@ const PostModel = require('../models/PostModel');
 const UserModel = require('../models/UserModel');
 
 class PostService {
-  async getAllPosts() {
-    const posts = await PostModel.find();
+  async getAllPosts(limit, page) {
+    const posts = await PostModel.find()
+      .sort( '-createdOn' )
+      .limit( limit )
+      .skip((page - 1) * limit)
+    console.log(limit, page)
     return posts;
+
   }
   async getPost(id) {
     const post = await PostModel.findById(id);
