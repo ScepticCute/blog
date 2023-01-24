@@ -3,13 +3,16 @@ const PostService = require('../services/PostService');
 class PostController {
   async getAllPosts(req, res) {
     try {
-      const posts = await PostService.getAllPosts();
+      const {limit, page} = req.query
+      const posts = await PostService.getAllPosts(limit, page);
       res.json({
+        success: true,
         posts,
       });
     } catch (e) {
       console.info(e);
-      res.status(404).json({
+      res.status(400).json({
+        success: false,
         message: e.message,
       });
     }
@@ -20,11 +23,13 @@ class PostController {
       console.error(id);
       const post = await PostService.getPost(id);
       res.json({
+        success: true,
         post,
       });
     } catch (e) {
       console.info(e);
-      res.status(404).json({
+      res.status(400).json({
+        success: false,
         message: e.message,
       });
     }
@@ -33,14 +38,16 @@ class PostController {
   async createPost(req, res) {
     try {
       const { body, title } = req.body;
+      console.log(body, title)
       const post = await PostService.createPost(body, title);
       res.status(201).json({
-        message: 'Пост успешно создан!',
+        success: true,
         post,
       });
     } catch (e) {
       console.info(e);
       res.status(400).json({
+        success: false,
         message: e.message,
       });
     }
@@ -50,10 +57,11 @@ class PostController {
     try {
       const { id } = req.params;
       await PostService.deletePost(id);
-      res.json({ message: 'Пост удалён.' });
+      res.json({success: true});
     } catch (e) {
       console.info(e);
       res.status(400).json({
+        success: false,
         message: e.message,
       });
     }
@@ -65,12 +73,13 @@ class PostController {
       const { id } = req.params;
       const post = await PostService.updatePost(id, body, title);
       res.status(200).json({
-        message: 'Пост был успешно изменён.',
+        success: true,
         post,
       });
     } catch (e) {
       console.info(e);
       res.status(400).json({
+        success: false,
         message: e.message,
       });
     }
@@ -79,15 +88,16 @@ class PostController {
   async replacePost(req, res) {
     try {
       const { body, title } = req.body;
-      const { id } = req.param;
+      const { id } = req.params;
       const post = await PostService.replacePost(id, body, title);
       res.status(200).json({
-        message: 'Пост был успешно обновлён',
+        success: true,
         post,
       });
     } catch (e) {
       console.info(e);
       res.status(400).json({
+        success: false,
         message: e.message,
       });
     }

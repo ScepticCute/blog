@@ -15,6 +15,9 @@ const PostSchema = new Schema({
   // tags: {
   //   type: Array,
   // }
-});
+
+},
+  { timestamps: true },
+);
 
 module.exports = Post = model("post", PostSchema);

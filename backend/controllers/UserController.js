@@ -9,12 +9,13 @@ class UserController {
       const user = await UserService.registration(email, password);
 
       return res.json({
-        message: "Пользователь успешно зарегистрирован.",
+        success: true,
         user,
       });
     } catch (e) {
       console.info(e);
       res.status(400).json({
+        success: false,
         message: "Не удалось создать пользователя.",
       });
     }
@@ -26,12 +27,13 @@ class UserController {
       const user = await UserService.login(email, password);
 
       res.json({
-        message: "Успешная авторизация.",
+        success: true,
         user,
       });
     } catch (e) {
       console.info(e);
       res.status(400).json({
+        success: false,
         message: "Неудачная авторизация.",
       });
     }
