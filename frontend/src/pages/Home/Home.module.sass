@@ -1,0 +1,30 @@
+@import '../../index.sass'
+
+
+.wrapper
+  max-width: 1080px
+  margin: 0 auto
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px
+  margin-top: 20px
+  padding: 20px
+
+  display: flex
+  justify-content: space-between
+  .content
+    display: flex
+    max-width: 700px
+    padding-right: 50px
+
+  aside
+    min-width: 300px
+    padding-top: 10px
+
+@media(max-width: $max-width-tablet)
+  .wrapper 
+    flex-direction: column-reverse
+    justify-content: center
+
+    .content
+      justify-content: center
+      padding: 0
+

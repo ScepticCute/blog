@@ -1,14 +1,24 @@
 import React, { FC } from 'react';
 import styles from './PostsList.module.sass';
+import Post from '../Post/Post'
+
 
 interface IPostsListProps {
-  postId: number;
 }
 
-const PostsList: FC<IPostsListProps> = ({ postId }) => {
+
+
+const PostsList: FC<IPostsListProps> = () => {
   return (
     <div className={styles.wrapper}>
-      <h2>Post ID: {postId}</h2>
+        <Post /> 
+        <Post /> 
+        <Post /> 
+        <Post /> 
+        <Post /> 
+        <Post /> 
+        <Post /> 
+        <Post /> 
     </div>
   );
 };
