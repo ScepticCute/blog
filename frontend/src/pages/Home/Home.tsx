@@ -42,12 +42,14 @@ export const Home = () => {
 
   return (
     <div className={styles.wrapper}>
-      <button onClick={() => onClickCreatePost()}> CREATE POST DEBUG </button>
-      <button onClick={() => onClickGetAllPosts()}> GET ALL POSTS DEBUG </button>
-      <button onClick={() => onClickGetOnePost()}> GET ONE POST DEBUG </button>
-      <button onClick={() => onClickUpdatePost()}> UPDATE ONE POST DEBUG </button>
-      <button onClick={() => onClickUpdatePost()}> REPLACE ONE POST DEBUG </button>
-      <button onClick={() => onClickDeletePost()}> DELETE ONE POST DEBUG </button>
+      <div className={styles.DEBUG_ONLY}> 
+        <button onClick={() => onClickCreatePost()}> CREATE POST DEBUG </button>
+        <button onClick={() => onClickGetAllPosts()}> GET ALL POSTS DEBUG </button>
+        <button onClick={() => onClickGetOnePost()}> GET ONE POST DEBUG </button>
+        <button onClick={() => onClickUpdatePost()}> UPDATE ONE POST DEBUG </button>
+        <button onClick={() => onClickUpdatePost()}> REPLACE ONE POST DEBUG </button>
+        <button onClick={() => onClickDeletePost()}> DELETE ONE POST DEBUG </button>
+      </div>
       <section className={styles.content}> 
         <PostsList />
       </section>

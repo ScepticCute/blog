@@ -24,11 +24,11 @@ class UserController {
   async login(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await UserService.login(email, password);
+      const token = await UserService.login(email, password);
 
       res.json({
         success: true,
-        user,
+        token
       });
     } catch (e) {
       console.info(e);

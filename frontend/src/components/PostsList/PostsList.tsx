@@ -9,6 +9,11 @@ interface IPostsListProps {
 
 
 const PostsList: FC<IPostsListProps> = () => {
+
+  React.useEffect(() => {
+    
+  }, [])
+
   return (
     <div className={styles.wrapper}>
         <Post /> 

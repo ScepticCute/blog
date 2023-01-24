@@ -20,6 +20,7 @@ module.exports.validateCreateOrUpdateOrPutPost = [
 ]
 /* ----> POST VALIDATION <---- */
 
+/* ----> ERROR CHECKER <---- */
 module.exports.validateError = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -29,3 +30,4 @@ module.exports.validateError = (req, res, next) => {
 
   next();
 };
+/* ----> ERROR CHECKER <---- */

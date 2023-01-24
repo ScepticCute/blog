@@ -1,6 +1,8 @@
 const UserModel = require("../models/UserModel");
-const bcrypt = require("bcrypt");
+const RoleModel = require("../models/RoleModel");
+const generateJwtToken = require('../utils/generateJwtToken')
 
+const bcrypt = require("bcrypt");
 class UserService {
   async registration(email, password) {
     const candidate = await UserModel.findOne({ email });
@@ -9,9 +11,13 @@ class UserService {
     }
 
     const passwordHash = bcrypt.hashSync(password, 3);
+
+    const userRole = await RoleModel.findOne({value: "USER"})
+
     const user = new UserModel({
       email,
       password: passwordHash,
+      roles: [userRole.value]
     });
 
     await user.save();
@@ -32,6 +38,10 @@ class UserService {
     if (!passwordIsValid) {
       throw new Error("Логин или пароль введены неправильно.");
     }
+
+    const token = generateJwtToken(user._id, user.roles)
+
+    return token
   }
 }
 

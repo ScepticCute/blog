@@ -7,7 +7,6 @@ class PostService {
       .sort( '-createdOn' )
       .limit( limit )
       .skip((page - 1) * limit)
-    console.log(limit, page)
     return posts;
 
   }
