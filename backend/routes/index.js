@@ -14,14 +14,17 @@ const {
 } = require('../utils/validations');
 const router = express.Router();
 
+// Closure Middleware
+// roleCheckerMiddleware(['USER'])
+
 //POSTS
 router.get('/posts/:id',  PostController.getPost);
 
-router.get('/posts', roleCheckerMiddleware(['USER']),PostController.getAllPosts);
+router.get('/posts', PostController.getAllPosts);
 
 router.post('/posts', authMiddleware, validateCreateOrUpdateOrPutPost, validateError, PostController.createPost);
 
-router.delete('/posts/:id', PostController.deletePost);
+router.delete('/posts/:id', authMiddleware, PostController.deletePost);
 
 router.patch(
   '/posts/:id',
@@ -46,6 +49,7 @@ router.post(
   UserController.registration,
 );
 router.post('/login', validateRegistrationAndLogin, validateError, UserController.login);
+router.get('/users/:id', authMiddleware, UserController.getUser);
 //USERS
 
 module.exports = router;

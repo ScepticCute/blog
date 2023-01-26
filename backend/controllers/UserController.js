@@ -38,8 +38,22 @@ class UserController {
       });
     }
   }
-  async func(req, res) {}
-  async func(req, res) {}
+  async getUser(req, res) {
+    try {
+      const { id } = req.params
+      const data = await UserService.getUser(id)
+      res.json({
+        success: true,
+        data
+      })
+    } catch(e) {
+        console.info(e);
+        res.status(400).json({
+          success: false,
+          message: "Такого пользователя не существует.",
+        });
+    }
+  }
 }
 
 module.exports = new UserController();

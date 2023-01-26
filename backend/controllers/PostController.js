@@ -20,7 +20,6 @@ class PostController {
   async getPost(req, res) {
     try {
       const { id } = req.params;
-      console.error(id);
       const post = await PostService.getPost(id);
       res.json({
         success: true,
@@ -38,7 +37,6 @@ class PostController {
   async createPost(req, res) {
     try {
       const { body, title } = req.body;
-      console.log(body, title)
       const post = await PostService.createPost(body, title);
       res.status(201).json({
         success: true,

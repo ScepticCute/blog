@@ -43,6 +43,11 @@ class UserService {
 
     return token
   }
+  async getUser(id) {
+    const user = await UserModel.findById(id)
+    if(!user) throw new Error(`Такого пользователя не существует.`)
+    return user
+  }
 }
 
 module.exports = new UserService();

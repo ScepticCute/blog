@@ -10,6 +10,7 @@ interface IResponse {
   success: boolean,
   message?: string,
 }
+/* POSTS */
 
 type Post = {
   post: {
@@ -109,9 +110,24 @@ export const deletePost = async (id: string) => {
   try {
     await instance.delete(`/posts/${id}`);
     return {success: true}
-  } catch (e: any) {
+  } catch (e) {
     console.info(e)
     //@ts-ignore: 
     return e.response.data
   }
 };
+
+/* POSTS */
+
+/* USER */
+export const getUserData = async (id: string) => {
+  try {
+    const data = await instance.get(`/user/${id}`)
+    return data
+  } catch(e) {
+    console.info(e)
+    //@ts-ignore: 
+    return e.response.data
+  }
+}
+/* USER */
