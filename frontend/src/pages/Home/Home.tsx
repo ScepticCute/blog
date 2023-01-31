@@ -1,55 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Home.module.sass';
 import TagsAside from '../../components/TagsAside/TagsAside'
 import PostsList from '../../components/PostsList/PostsList'
 
-import {createPost, getPosts, getPost, updatePost, replacePost, deletePost} from '../../http/axios'
+import { fetchPosts } from '../../redux/slices/postsSlice';
+import { useAppDispatch } from '../../hooks/reduxHooks';
 
 export const Home = () => {
+  const dispatch = useAppDispatch()
 
-  const onClickCreatePost = async () => {
-    const response = await createPost( 'body111111111111', 'title')
-    console.log('HANDLER: ', response)
-  }
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchPosts())
+  }, [])
 
-  const onClickGetAllPosts = async () => {
-    const response = await getPosts( 2, 1 )
-    console.log('HANDLER: ', response)
-  }
-
-  const onClickGetOnePost = async () => {
-    const response = await getPost( '63cfe551dc6175fe2681529c' )
-    console.log('HANDLER: ', response)
-  }
-
-  const onClickUpdatePost = async () => {
-    const response = await updatePost( '63cfe551dc6175fe2681529c', 'body111111222222222', 'title111211111')
-    console.log('HANDLER: ', response)
-  }
-
-  const onClickReplacePost = async () => {
-    const response = await replacePost( '63cfe551dc6175fe2681529c', 'body111111222222222', 'title111211111')
-    console.log('HANDLER: ', response)
-  }
-
-  const onClickDeletePost = async () => {
-    const response = await deletePost( '63cfe551dc6175fe2681529c')
-    console.log('HANDLER DONE')
-    console.log(response)
-    console.log('HANDLER DONE')
-  }
 
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.DEBUG_ONLY}> 
-        <button onClick={() => onClickCreatePost()}> CREATE POST DEBUG </button>
-        <button onClick={() => onClickGetAllPosts()}> GET ALL POSTS DEBUG </button>
-        <button onClick={() => onClickGetOnePost()}> GET ONE POST DEBUG </button>
-        <button onClick={() => onClickUpdatePost()}> UPDATE ONE POST DEBUG </button>
-        <button onClick={() => onClickUpdatePost()}> REPLACE ONE POST DEBUG </button>
-        <button onClick={() => onClickDeletePost()}> DELETE ONE POST DEBUG </button>
-      </div>
+    <main className={styles.wrapper}>
       <section className={styles.content}> 
         <PostsList />
       </section>
@@ -57,5 +25,5 @@ export const Home = () => {
         <TagsAside />
       </aside>
       
-    </div>);
+    </main>);
 };

@@ -13,9 +13,11 @@ export const Header = () => {
       <nav>
         <ul>
           {paths.map((path) => (
+            <Link to={path.path}> 
             <li key={path.path}>
-              <Link to={path.path}> {path.name} </Link>
+              {path.name} 
             </li>
+            </Link>
           ))}
         </ul>
       </nav>

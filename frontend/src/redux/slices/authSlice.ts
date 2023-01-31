@@ -8,8 +8,8 @@
 //   roles?: string[]
 // }
 
-// export const fetchUserData = createAsyncThunk('auth/fetchUserData', async () => {
-//   const {data} = await getUserData()
+// export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (id: string) => {
+//   const {data} = await getUserData(id)
 
 
 
@@ -17,15 +17,11 @@
 
 
 // const initialState: AuthState = {
-
 // }
 
 // const authSlice = createSlice({
 //   name: 'auth',
 //   initialState,
-//   extraReducers: {
-//     [fetchUserData]
-//   }
 // });
 
 // export const { increment } = authSlice.actions;

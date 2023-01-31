@@ -8,7 +8,7 @@ class UserController {
 
       const user = await UserService.registration(email, password);
 
-      return res.json({
+      res.json({
         success: true,
         user,
       });

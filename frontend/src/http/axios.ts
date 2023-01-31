@@ -4,6 +4,9 @@ import {validationPost, ValidationResult} from './validation'
 const instance = axios.create({
   baseURL: 'http://localhost:8000/api/',
   timeout: 1000,
+  // headers: {
+  //   Authorization : `Bearer ${localStorage.getItem("access_token")}`
+  //   }
 });
 
 interface IResponse {
@@ -120,6 +123,7 @@ export const deletePost = async (id: string) => {
 /* POSTS */
 
 /* USER */
+
 export const getUserData = async (id: string) => {
   try {
     const data = await instance.get(`/user/${id}`)

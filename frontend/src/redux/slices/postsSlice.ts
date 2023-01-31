@@ -1,25 +1,48 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { getPosts } from '../../http/axios';
+
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const {posts} = await getPosts()
+  return posts
+})
+
+export interface IPost {
+  _id: string,
+  title: string,
+  body: string,
+}
 
 export interface IPosts {
-  value: number;
+  posts: {
+    items: [] | IPost[],
+    status: 'loading' | 'fulfilled' | 'rejected'
+  }
 }
 
 const initialState: IPosts = {
-  value: 0,
+  posts: {
+    items: [],
+    status: 'loading'
+  }
 };
 
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchPosts.pending, (state) => {
+      state.posts.status = 'loading'
+    }),
+    builder.addCase(fetchPosts.fulfilled, (state, action: PayloadAction<IPost[]>) => {
+      state.posts.items = action.payload
+      state.posts.status = 'fulfilled'
+    })
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { increment } = postsSlice.actions;
+export const {  } = postsSlice.actions;
 
 export default postsSlice.reducer;

@@ -3,7 +3,7 @@ import styles from './Registration.module.scss';
 
 export const Registration = () => {
   return (
-    <section>
+    <main>
       <div>Создание аккаунта</div>
       <div className={styles.avatar}>
         <Avatar />
@@ -21,6 +21,6 @@ export const Registration = () => {
         <input className={styles.field} />
       </label>
       <button>Зарегистрироваться</button>
-    </section>
+    </main>
   );
 };
